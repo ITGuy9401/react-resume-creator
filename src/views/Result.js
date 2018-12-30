@@ -1,5 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
+import {withUserInformationCtx} from "../context/UserInformationContext";
 
 class Result extends React.Component {
 
@@ -10,4 +11,4 @@ class Result extends React.Component {
     }
 }
 
-export default withRouter(Result);
+export default withRouter(withUserInformationCtx(Result));

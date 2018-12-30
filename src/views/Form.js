@@ -1,11 +1,26 @@
 /* eslint-disable no-restricted-globals */
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {Button, Container, Content, Control, Field, Input, Label, Select, Subtitle, TextArea, Title} from "bloomer";
+import {
+    Button,
+    Container,
+    Content,
+    Control,
+    Field,
+    Hero,
+    HeroBody,
+    Input,
+    Label,
+    Select,
+    Subtitle,
+    TextArea,
+    Title
+} from "bloomer";
 import uuidv4 from "uuidv4";
 import JobQuestion from "../components/JobQuestion";
 import VolunteerQuestion from "../components/VolunteerQuestion";
 import AcademicQuestion from "../components/AcademicQuestion";
+import {withUserInformationCtx} from "../context/UserInformationContext";
 
 class Form extends React.Component {
 
@@ -19,11 +34,44 @@ class Form extends React.Component {
 
     constructor(props) {
         super(props);
+        this.download = this.download.bind(this);
+        this.generate = this.generate.bind(this);
         this.onInputUpdate = this.onInputUpdate.bind(this);
+        this.readSingleFile = this.readSingleFile.bind(this);
         this.createPosition = this.createPosition.bind(this);
         this.removePosition = this.removePosition.bind(this);
         this.updatePosition = this.updatePosition.bind(this);
     }
+
+    download() {
+        const json = JSON.stringify(this.state.form);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+
+        location.href = URL.createObjectURL(blob);
+    }
+
+    generate() {
+        this.props.userInfo.saveForm(this.state.form);
+        this.props.history.push("/result");
+    }
+
+    readSingleFile(e) {
+        const file = e.target.files[0];
+        if (!file) {
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const c = JSON.parse(e.target.result);
+            c.jobs = c.jobs || [];
+            c.academic = c.academic || [];
+            c.volunteer = c.volunteer || [];
+        };
+        reader.readAsText(file);
+    }
+
 
     static resolveKind(kind) {
         return kind === "J" ? "jobs" : kind === "A" ? "academic" : "volunteer";
@@ -100,28 +148,52 @@ class Form extends React.Component {
     render() {
         return (
             <Container>
-                <Title>Resume Creator</Title>
-                <Subtitle>Fill the form to create your resume</Subtitle>
+                <Hero isColor="primary">
+                    <HeroBody>
+                        <Content>
+                            <Title>Resume Creator</Title>
+                            <Subtitle>Fill the form to create your resume</Subtitle>
+                        </Content>
+                    </HeroBody>
+                </Hero>
                 <Content>
                     <form className="form">
                         <Field>
-                            <Label>First name</Label>
+                            <Label>Restore save</Label>
                             <Control>
-                                <Input type="text" placeholder='Es. Anna' name="first_name"
-                                       onChange={this.onInputUpdate}/>
+                                <Input type="file" placeholder='Es. resume.json' name="fileRestore"
+                                       onChange={this.readSingleFile}/>
                             </Control>
-                        </Field>
+                        </Field><Field>
+                        <Label>First name</Label>
+                        <Control>
+                            <Input type="text" placeholder='Es. Anna' name="first_name"
+                                   defaultValue={this.state.form.first_name}
+                                   onChange={this.onInputUpdate}/>
+                        </Control>
+                    </Field>
                         <Field>
                             <Label>Last name</Label>
                             <Control>
                                 <Input type="text" placeholder='Es. Wright' name="last_name"
+                                       defaultValue={this.state.form.last_name}
                                        onChange={this.onInputUpdate}/>
+                            </Control>
+                        </Field>
+                        <Field>
+                            <Label>Home Address</Label>
+                            <Control>
+                                <Input type="text"
+                                       defaultValue={this.state.form.address}
+                                       placeholder='Es. 1 Princes Street, EH0 0XX, Edinburgh, United Kingdom'
+                                       name="address" onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
                         <Field>
                             <Label>Gender</Label>
                             <Control>
-                                <Select>
+                                <Select name="gender" onChange={this.onInputUpdate}
+                                        defaultValue={this.state.form.gender}>
                                     <option>Please Choose</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
@@ -133,6 +205,7 @@ class Form extends React.Component {
                             <Label>E-Mail</Label>
                             <Control>
                                 <Input type="email" placeholder='Es. annawright@gmail.com' name="email"
+                                       defaultValue={this.state.form.email}
                                        onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
@@ -140,6 +213,7 @@ class Form extends React.Component {
                             <Label>Phone</Label>
                             <Control>
                                 <Input type="text" placeholder='Es. +44 (0) 7777 777777' name="phone"
+                                       defaultValue={this.state.form.phone}
                                        onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
@@ -147,6 +221,7 @@ class Form extends React.Component {
                             <Label>Biography</Label>
                             <Control>
                                 <TextArea placeholder="Write a bit about yourself" name="biography"
+                                          defaultValue={this.state.form.biography}
                                           onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
@@ -154,6 +229,7 @@ class Form extends React.Component {
                             <Label>Soft Skills</Label>
                             <Control>
                                 <TextArea placeholder="Write a bit about your soft skills" name="soft_skills"
+                                          defaultValue={this.state.form.soft_skills}
                                           onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
@@ -161,6 +237,7 @@ class Form extends React.Component {
                             <Label>Hobbies & Passions</Label>
                             <Control>
                                 <TextArea placeholder="Write a bit about your hobbies and passions" name="hobbies"
+                                          defaultValue={this.state.form.hobbies}
                                           onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
@@ -202,12 +279,26 @@ class Form extends React.Component {
                         {this.state.form.volunteer.map(e => <VolunteerQuestion job={e}
                                                                                removePosition={this.removePosition}
                                                                                updatePosition={this.updatePosition}/>)}
+                        <br/>
+
+                        <Field>
+                            <Control>
+                                <Button isColor="info" onClick={this.download}>
+                                    Download the file for later
+                                </Button>&nbsp;
+                                <Button isColor="primary" onClick={this.generate}>
+                                    Generate the Curriculum
+                                </Button>
+                            </Control>
+                        </Field>
+
+                        <br/>
+
                     </form>
-                    <br/>
                 </Content>
             </Container>
         );
     }
 }
 
-export default withRouter(Form);
+export default withRouter(withUserInformationCtx(Form));

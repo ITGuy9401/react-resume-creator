@@ -25,6 +25,7 @@ import {withUserInformationCtx} from "../context/UserInformationContext";
 class Form extends React.Component {
 
     state = {
+        loading: false,
         form: {
             jobs: [],
             academic: [],
@@ -44,12 +45,14 @@ class Form extends React.Component {
     }
 
     download() {
+        this.setState({downloadUrl: null});
+
         const json = JSON.stringify(this.state.form);
         const blob = new Blob([json], {
             type: 'application/json'
         });
 
-        location.href = URL.createObjectURL(blob);
+        this.setState({downloadUrl: URL.createObjectURL(blob)});
     }
 
     generate() {
@@ -63,11 +66,12 @@ class Form extends React.Component {
             return;
         }
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = (e) => {
             const c = JSON.parse(e.target.result);
             c.jobs = c.jobs || [];
             c.academic = c.academic || [];
             c.volunteer = c.volunteer || [];
+            this.setState({loading: false, form: c});
         };
         reader.readAsText(file);
     }
@@ -164,139 +168,153 @@ class Form extends React.Component {
                                 <Input type="file" placeholder='Es. resume.json' name="fileRestore"
                                        onChange={this.readSingleFile}/>
                             </Control>
-                        </Field><Field>
-                        <Label>First name</Label>
-                        <Control>
-                            <Input type="text" placeholder='Es. Anna' name="first_name"
-                                   defaultValue={this.state.form.first_name}
-                                   onChange={this.onInputUpdate}/>
-                        </Control>
-                    </Field>
-                        <Field>
-                            <Label>Last name</Label>
-                            <Control>
-                                <Input type="text" placeholder='Es. Wright' name="last_name"
-                                       defaultValue={this.state.form.last_name}
-                                       onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Home Address</Label>
-                            <Control>
-                                <Input type="text"
-                                       defaultValue={this.state.form.address}
-                                       placeholder='Es. 1 Princes Street, EH0 0XX, Edinburgh, United Kingdom'
-                                       name="address" onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Gender</Label>
-                            <Control>
-                                <Select name="gender" onChange={this.onInputUpdate}
-                                        defaultValue={this.state.form.gender}>
-                                    <option>Please Choose</option>
-                                    <option value="M">Male</option>
-                                    <option value="F">Female</option>
-                                    <option value="X">Other</option>
-                                </Select>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>E-Mail</Label>
-                            <Control>
-                                <Input type="email" placeholder='Es. annawright@gmail.com' name="email"
-                                       defaultValue={this.state.form.email}
-                                       onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Phone</Label>
-                            <Control>
-                                <Input type="text" placeholder='Es. +44 (0) 7777 777777' name="phone"
-                                       defaultValue={this.state.form.phone}
-                                       onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Biography</Label>
-                            <Control>
-                                <TextArea placeholder="Write a bit about yourself" name="biography"
-                                          defaultValue={this.state.form.biography}
-                                          onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Soft Skills</Label>
-                            <Control>
-                                <TextArea placeholder="Write a bit about your soft skills" name="soft_skills"
-                                          defaultValue={this.state.form.soft_skills}
-                                          onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Field>
-                            <Label>Hobbies & Passions</Label>
-                            <Control>
-                                <TextArea placeholder="Write a bit about your hobbies and passions" name="hobbies"
-                                          defaultValue={this.state.form.hobbies}
-                                          onChange={this.onInputUpdate}/>
-                            </Control>
-                        </Field>
-                        <Subtitle>Job Positions</Subtitle>
-                        <Field>
-                            <Control>
-                                <Button isColor="primary" onClick={() => this.createPosition("J")}>
-                                    Add New
-                                </Button>
-                            </Control>
                         </Field>
 
-                        {this.state.form.jobs.map(e => <JobQuestion job={e}
-                                                                    removePosition={this.removePosition}
-                                                                    updatePosition={this.updatePosition}/>)}
-
-                        <Subtitle>Academic Experience</Subtitle>
-                        <Field>
-                            <Control>
-                                <Button isColor="primary" onClick={() => this.createPosition("A")}>
-                                    Add New
-                                </Button>
-                            </Control>
-                        </Field>
-
-                        {this.state.form.academic.map(e => <AcademicQuestion job={e}
-                                                                             removePosition={this.removePosition}
-                                                                             updatePosition={this.updatePosition}/>)}
-
-                        <Subtitle>Volunteer Experience</Subtitle>
-                        <Field>
-                            <Control>
-                                <Button isColor="primary" onClick={() => this.createPosition("V")}>
-                                    Add New
-                                </Button>
-                            </Control>
-                        </Field>
-
-                        {this.state.form.volunteer.map(e => <VolunteerQuestion job={e}
-                                                                               removePosition={this.removePosition}
-                                                                               updatePosition={this.updatePosition}/>)}
-                        <br/>
-
-                        <Field>
-                            <Control>
-                                <Button isColor="info" onClick={this.download}>
-                                    Download the file for later
-                                </Button>&nbsp;
-                                <Button isColor="primary" onClick={this.generate}>
-                                    Generate the Curriculum
-                                </Button>
-                            </Control>
-                        </Field>
+                        {this.state.loading ? null : this.renderFields()}
 
                         <br/>
 
                     </form>
                 </Content>
             </Container>
+        );
+    }
+
+    renderFields() {
+        return (
+            <div>
+                <Field>
+                    <Label>First name</Label>
+                    <Control>
+                        <Input type="text" placeholder='Es. Anna' name="first_name"
+                               defaultValue={this.state.form.first_name}
+                               onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Last name</Label>
+                    <Control>
+                        <Input type="text" placeholder='Es. Wright' name="last_name"
+                               defaultValue={this.state.form.last_name}
+                               onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Home Address</Label>
+                    <Control>
+                        <Input type="text"
+                               defaultValue={this.state.form.address}
+                               placeholder='Es. 1 Princes Street, EH0 0XX, Edinburgh, United Kingdom'
+                               name="address" onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Gender</Label>
+                    <Control>
+                        <Select name="gender" onChange={this.onInputUpdate}
+                                defaultValue={this.state.form.gender}>
+                            <option>Please Choose</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                            <option value="X">Other</option>
+                        </Select>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>E-Mail</Label>
+                    <Control>
+                        <Input type="email" placeholder='Es. annawright@gmail.com' name="email"
+                               defaultValue={this.state.form.email}
+                               onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Phone</Label>
+                    <Control>
+                        <Input type="text" placeholder='Es. +44 (0) 7777 777777' name="phone"
+                               defaultValue={this.state.form.phone}
+                               onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Biography</Label>
+                    <Control>
+                                <TextArea placeholder="Write a bit about yourself" name="biography"
+                                          defaultValue={this.state.form.biography}
+                                          onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Soft Skills</Label>
+                    <Control>
+                                <TextArea placeholder="Write a bit about your soft skills" name="soft_skills"
+                                          defaultValue={this.state.form.soft_skills}
+                                          onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Field>
+                    <Label>Hobbies & Passions</Label>
+                    <Control>
+                                <TextArea placeholder="Write a bit about your hobbies and passions" name="hobbies"
+                                          defaultValue={this.state.form.hobbies}
+                                          onChange={this.onInputUpdate}/>
+                    </Control>
+                </Field>
+                <Subtitle>Job Positions</Subtitle>
+                <Field>
+                    <Control>
+                        <Button isColor="primary" onClick={() => this.createPosition("J")}>
+                            Add New
+                        </Button>
+                    </Control>
+                </Field>
+
+                {this.state.form.jobs.map(e => <JobQuestion job={e}
+                                                            removePosition={this.removePosition}
+                                                            updatePosition={this.updatePosition}/>)}
+
+                <Subtitle>Academic Experience</Subtitle>
+                <Field>
+                    <Control>
+                        <Button isColor="primary" onClick={() => this.createPosition("A")}>
+                            Add New
+                        </Button>
+                    </Control>
+                </Field>
+
+                {this.state.form.academic.map(e => <AcademicQuestion job={e}
+                                                                     removePosition={this.removePosition}
+                                                                     updatePosition={this.updatePosition}/>)}
+
+                <Subtitle>Volunteer Experience</Subtitle>
+                <Field>
+                    <Control>
+                        <Button isColor="primary" onClick={() => this.createPosition("V")}>
+                            Add New
+                        </Button>
+                    </Control>
+                </Field>
+
+                {this.state.form.volunteer.map(e => <VolunteerQuestion job={e}
+                                                                       removePosition={this.removePosition}
+                                                                       updatePosition={this.updatePosition}/>)}
+                <br/>
+
+                <Field>
+                    <Control>
+                        <Button isColor="info" onClick={this.download}>
+                            Generate the download
+                        </Button>&nbsp;
+                        <Button isColor="info" download="resume.json" href={this.state.downloadUrl}
+                                disabled={!this.state.downloadUrl}>
+                            Download
+                        </Button>&nbsp;
+                        <Button isColor="primary" onClick={this.generate}>
+                            Generate the Curriculum
+                        </Button>
+                    </Control>
+                </Field>
+            </div>
         );
     }
 }

@@ -49,9 +49,11 @@ jobs:
         name: Deploy & Alias
         command: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              now --token $ZEIT_TOKEN rm resume-generator
               now --token $ZEIT_TOKEN --local-config .now/now.production.json
               now --token $ZEIT_TOKEN --local-config .now/now.production.json alias
-          elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+          elif [ "${CIRCLE_BRANCH}" == "staging" ]; then
+              now --token $ZEIT_TOKEN rm resume-generator-stg
               now --token $ZEIT_TOKEN --local-config .now/now.staging.json
               now --token $ZEIT_TOKEN --local-config .now/now.staging.json alias
           else

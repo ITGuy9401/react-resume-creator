@@ -1,16 +1,104 @@
+/* eslint-disable no-restricted-globals */
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {Container, Content, Control, Field, Input, Label, Select, Subtitle, TextArea, Title} from "bloomer";
+import {
+    Box,
+    Button,
+    Container,
+    Content,
+    Control,
+    Field,
+    Input,
+    Label,
+    Select,
+    Subtitle,
+    TextArea,
+    Title
+} from "bloomer";
+import uuidv4 from "uuidv4";
 
 class Form extends React.Component {
 
     state = {
-        form: {}
+        form: {
+            jobs: [],
+            academic: [],
+            volunteer: []
+        }
     };
 
     constructor(props) {
         super(props);
         this.onInputUpdate = this.onInputUpdate.bind(this);
+        this.createPosition = this.createPosition.bind(this);
+        this.removePosition = this.removePosition.bind(this);
+        this.updatePosition = this.updatePosition.bind(this);
+    }
+
+    static resolveKind(kind) {
+        return kind === "J" ? "jobs" : kind === "A" ? "academic" : "volunteer";
+    }
+
+    createPosition(kind) {
+        const e = Form.resolveKind(kind);
+        const entry = {
+            uuid: uuidv4()
+        };
+
+        const form = {...this.state.form};
+        form[e] = form[e] || [];
+        form[e].push(entry);
+
+        this.setState({form: form}, () => console.debug(this.state)); // debug
+    }
+
+    removePosition(kind, uuid) {
+        const e = Form.resolveKind(kind);
+        const form = {...this.state.form};
+        form[e] = form[e] || [];
+        let idx = -1;
+        let found = null;
+
+        for (let i = 0; i < form[e].length; i++) {
+            console.debug(form[e][i]);
+            if (form[e][i].uuid === uuid) {
+                idx = i;
+                found = form[e][i];
+                break;
+            }
+        }
+
+        if (!found) {
+            alert(`Cannot find ${e} with id ${uuid}`);
+        }
+
+        if (!!found && confirm(`Are you sure you want to delete element about ${found.position} at ${found.company}?`)) {
+            form[e].splice(idx, 1);
+        }
+
+        this.setState({form: form}, () => console.debug(this.state)); // debug
+    }
+
+    updatePosition(kind, uuid, event) {
+        const e = Form.resolveKind(kind);
+        const form = {...this.state.form};
+        form[e] = form[e] || [];
+        let found = null;
+
+        for (let i = 0; i < form[e].length; i++) {
+            console.debug(form[e][i]);
+            if (form[e][i].uuid === uuid) {
+                found = true;
+                form[e][i][event.target.name] = event.target.value;
+                break;
+            }
+        }
+
+        if (!found) {
+            alert(`Cannot find ${e} with id ${uuid}`);
+        }
+
+        this.setState({form: form}, () => console.debug(this.state)); // debug
     }
 
     onInputUpdate(event) {
@@ -84,6 +172,85 @@ class Form extends React.Component {
                             <Control>
                                 <TextArea placeholder="Write a bit about your hobbies and passions" name="hobbies"
                                           onChange={this.onInputUpdate}/>
+                            </Control>
+                        </Field>
+                        <Subtitle>Job Positions</Subtitle>
+                        <Field>
+                            <Control>
+                                <Button isColor="primary" onClick={() => this.createPosition("J")}>
+                                    Add New
+                                </Button>
+                            </Control>
+                        </Field>
+                        {this.state.form.jobs.map(e => (
+                            <Box key={e.uuid}>
+                                <Field>
+                                    <Label>Position</Label>
+                                    <Control>
+                                        <Input type="text" placeholder='Es. CEO' name="position"
+                                               defaultValue={e.position}
+                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
+                                    </Control>
+                                </Field>
+                                <Field>
+                                    <Label>Company</Label>
+                                    <Control>
+                                        <Input type="text" placeholder='Es. Fabulous Inc.' name="company"
+                                               defaultValue={e.company}
+                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
+                                    </Control>
+                                </Field>
+                                <Field>
+                                    <Label>Start Date</Label>
+                                    <Control>
+                                        <Input type="date" name="start_date"
+                                               defaultValue={e.start_date}
+                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
+                                    </Control>
+                                </Field>
+
+                                <Field>
+                                    <Label>Current?</Label>
+                                    <Control>
+                                        <input type="checkbox" name="current"
+                                               defaultValue={e.current}
+                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
+                                    </Control>
+                                </Field>
+
+                                <Field>
+                                    <Label>End Date</Label>
+                                    <Control>
+                                        <Input type="date" name="end_date" disabled={e.current}
+                                               placeholder="leave empty if no end date"
+                                               defaultValue={e.end_date}
+                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
+                                    </Control>
+                                </Field>
+
+                                <Field>
+                                    <Label>Actions</Label>
+                                    <Control>
+                                        <Button isColor="danger"
+                                                onClick={() => this.removePosition("J", e.uuid)}>Delete</Button>
+                                    </Control>
+                                </Field>
+                            </Box>
+                        ))}
+                        <Subtitle>Academic Experience</Subtitle>
+                        <Field>
+                            <Control>
+                                <Button isColor="primary" onClick={() => this.createPosition("A")}>
+                                    Add New
+                                </Button>
+                            </Control>
+                        </Field>
+                        <Subtitle>Volunteer Experience</Subtitle>
+                        <Field>
+                            <Control>
+                                <Button isColor="primary" onClick={() => this.createPosition("V")}>
+                                    Add New
+                                </Button>
                             </Control>
                         </Field>
                     </form>

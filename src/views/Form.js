@@ -1,21 +1,9 @@
 /* eslint-disable no-restricted-globals */
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {
-    Box,
-    Button,
-    Container,
-    Content,
-    Control,
-    Field,
-    Input,
-    Label,
-    Select,
-    Subtitle,
-    TextArea,
-    Title
-} from "bloomer";
+import {Button, Container, Content, Control, Field, Input, Label, Select, Subtitle, TextArea, Title} from "bloomer";
 import uuidv4 from "uuidv4";
+import JobQuestion from "../components/JobQuestion";
 
 class Form extends React.Component {
 
@@ -182,61 +170,9 @@ class Form extends React.Component {
                                 </Button>
                             </Control>
                         </Field>
-                        {this.state.form.jobs.map(e => (
-                            <Box key={e.uuid}>
-                                <Field>
-                                    <Label>Position</Label>
-                                    <Control>
-                                        <Input type="text" placeholder='Es. CEO' name="position"
-                                               defaultValue={e.position}
-                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
-                                    </Control>
-                                </Field>
-                                <Field>
-                                    <Label>Company</Label>
-                                    <Control>
-                                        <Input type="text" placeholder='Es. Fabulous Inc.' name="company"
-                                               defaultValue={e.company}
-                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
-                                    </Control>
-                                </Field>
-                                <Field>
-                                    <Label>Start Date</Label>
-                                    <Control>
-                                        <Input type="date" name="start_date"
-                                               defaultValue={e.start_date}
-                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
-                                    </Control>
-                                </Field>
 
-                                <Field>
-                                    <Label>Current?</Label>
-                                    <Control>
-                                        <input type="checkbox" name="current"
-                                               defaultValue={e.current}
-                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
-                                    </Control>
-                                </Field>
+                        {this.props.jobs.map(e => <JobQuestion job={e} updatePosition={this.updatePosition}/>)}
 
-                                <Field>
-                                    <Label>End Date</Label>
-                                    <Control>
-                                        <Input type="date" name="end_date" disabled={e.current}
-                                               placeholder="leave empty if no end date"
-                                               defaultValue={e.end_date}
-                                               onChange={event => this.updatePosition("J", e.uuid, event)}/>
-                                    </Control>
-                                </Field>
-
-                                <Field>
-                                    <Label>Actions</Label>
-                                    <Control>
-                                        <Button isColor="danger"
-                                                onClick={() => this.removePosition("J", e.uuid)}>Delete</Button>
-                                    </Control>
-                                </Field>
-                            </Box>
-                        ))}
                         <Subtitle>Academic Experience</Subtitle>
                         <Field>
                             <Control>
@@ -258,6 +194,8 @@ class Form extends React.Component {
             </Container>
         );
     }
+
+]
 }
 
 export default withRouter(Form);

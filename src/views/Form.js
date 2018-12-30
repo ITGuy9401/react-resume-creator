@@ -1,6 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {Container, Content, Control, Field, Input, Label, Select, Subtitle, Title} from "bloomer";
+import {Container, Content, Control, Field, Input, Label, Select, Subtitle, TextArea, Title} from "bloomer";
 
 class Form extends React.Component {
 
@@ -16,7 +16,7 @@ class Form extends React.Component {
     onInputUpdate(event) {
         const form = {...this.state.form};
         form[event.target.name] = event.target.value;
-        this.setState({form: form});
+        this.setState({form: form}, () => console.debug(this.state)); // debug
     }
 
     render() {
@@ -44,6 +44,7 @@ class Form extends React.Component {
                             <Label>Gender</Label>
                             <Control>
                                 <Select>
+                                    <option>Please Choose</option>
                                     <option value="M">Male</option>
                                     <option value="F">Female</option>
                                     <option value="X">Other</option>
@@ -62,6 +63,27 @@ class Form extends React.Component {
                             <Control>
                                 <Input type="text" placeholder='Es. +44 (0) 7777 777777' name="phone"
                                        onChange={this.onInputUpdate}/>
+                            </Control>
+                        </Field>
+                        <Field>
+                            <Label>Biography</Label>
+                            <Control>
+                                <TextArea placeholder="Write a bit about yourself" name="biography"
+                                          onChange={this.onInputUpdate}/>
+                            </Control>
+                        </Field>
+                        <Field>
+                            <Label>Soft Skills</Label>
+                            <Control>
+                                <TextArea placeholder="Write a bit about your soft skills" name="soft_skills"
+                                          onChange={this.onInputUpdate}/>
+                            </Control>
+                        </Field>
+                        <Field>
+                            <Label>Hobbies & Passions</Label>
+                            <Control>
+                                <TextArea placeholder="Write a bit about your hobbies and passions" name="hobbies"
+                                          onChange={this.onInputUpdate}/>
                             </Control>
                         </Field>
                     </form>

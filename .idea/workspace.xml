@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d36bbc4-51df-4a24-8acd-a699f6c174a0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/JobQuestion.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.js" afterDir="false" />
     </list>
@@ -19,7 +18,7 @@
     <session id="689302664">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="2976" />
+          <entry key="js" value="3040" />
           <entry key="json" value="85" />
           <entry key="sh" value="43" />
           <entry key="txt" value="28" />
@@ -29,7 +28,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="85" />
-          <entry key="JavaScript" value="2976" />
+          <entry key="JavaScript" value="3040" />
           <entry key="PLAIN_TEXT" value="71" />
           <entry key="YAML" value="72" />
         </counts>
@@ -48,7 +47,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="4" />
+          <entry key="js" value="5" />
           <entry key="json" value="3" />
           <entry key="sh" value="2" />
           <entry key="yml" value="3" />
@@ -57,7 +56,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="3" />
-          <entry key="JavaScript" value="4" />
+          <entry key="JavaScript" value="5" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="YAML" value="3" />
         </counts>
@@ -69,11 +68,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="185" column="24" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="119">
+              <caret line="173" column="40" selection-start-line="173" selection-start-column="40" selection-end-line="173" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VolunteerQuestion.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="427">
+              <caret line="74" column="23" lean-forward="true" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -83,9 +88,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
               <caret line="7" column="27" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -131,6 +133,14 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>&quot;J&quot;</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>&quot;V&quot;</replace>
+    </replaceStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -146,6 +156,7 @@
         <option value="$PROJECT_DIR$/.now/now.feature.sh" />
         <option value="$PROJECT_DIR$/.circleci/config.yml" />
         <option value="$PROJECT_DIR$/src/components/JobQuestion.js" />
+        <option value="$PROJECT_DIR$/src/components/VolunteerQuestion.js" />
         <option value="$PROJECT_DIR$/src/views/Form.js" />
       </list>
     </option>
@@ -247,6 +258,11 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -287,7 +303,7 @@
       <option name="presentableId" value="Default" />
       <updated>1546189132439</updated>
       <workItem from="1546189133800" duration="274000" />
-      <workItem from="1546194720439" duration="6707000" />
+      <workItem from="1546194720439" duration="6924000" />
     </task>
     <task id="LOCAL-00001" summary="config and first development">
       <created>1546194567840</created>
@@ -331,11 +347,25 @@
       <option name="project" value="LOCAL" />
       <updated>1546202984179</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="config and first development">
+      <created>1546210018879</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1546210018879</updated>
+    </task>
+    <task id="LOCAL-00008" summary="config and first development">
+      <created>1546210068017</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1546210068017</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6812000" />
+    <option name="totallyTimeSpent" value="7029000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -346,7 +376,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4988086" weight="0.32876712" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4980143" visible="true" weight="0.32876712" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -355,7 +385,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Statistic" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4988086" weight="0.3219178" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50119144" side_tool="true" weight="0.32876712" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5019857" side_tool="true" visible="true" weight="0.32876712" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -486,19 +516,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
           <caret line="7" column="27" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VolunteerQuestion.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="74" column="23" lean-forward="true" selection-start-line="74" selection-start-column="23" selection-end-line="74" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="185" column="24" selection-start-line="185" selection-start-column="24" selection-end-line="185" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="173" column="40" selection-start-line="173" selection-start-column="40" selection-end-line="173" selection-end-column="40" />
         </state>
       </provider>
     </entry>

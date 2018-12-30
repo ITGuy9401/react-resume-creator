@@ -171,7 +171,7 @@ class Form extends React.Component {
                             </Control>
                         </Field>
 
-                        {this.props.jobs.map(e => <JobQuestion job={e} updatePosition={this.updatePosition}/>)}
+                        {this.state.form.jobs.map(e => <JobQuestion job={e} updatePosition={this.updatePosition}/>)}
 
                         <Subtitle>Academic Experience</Subtitle>
                         <Field>

@@ -4,6 +4,8 @@ import {withRouter} from "react-router-dom";
 import {Button, Container, Content, Control, Field, Input, Label, Select, Subtitle, TextArea, Title} from "bloomer";
 import uuidv4 from "uuidv4";
 import JobQuestion from "../components/JobQuestion";
+import VolunteerQuestion from "../components/VolunteerQuestion";
+import AcademicQuestion from "../components/AcademicQuestion";
 
 class Form extends React.Component {
 
@@ -171,7 +173,9 @@ class Form extends React.Component {
                             </Control>
                         </Field>
 
-                        {this.state.form.jobs.map(e => <JobQuestion job={e} updatePosition={this.updatePosition}/>)}
+                        {this.state.form.jobs.map(e => <JobQuestion job={e}
+                                                                    removePosition={this.removePosition}
+                                                                    updatePosition={this.updatePosition}/>)}
 
                         <Subtitle>Academic Experience</Subtitle>
                         <Field>
@@ -181,6 +185,11 @@ class Form extends React.Component {
                                 </Button>
                             </Control>
                         </Field>
+
+                        {this.state.form.academic.map(e => <AcademicQuestion job={e}
+                                                                             removePosition={this.removePosition}
+                                                                             updatePosition={this.updatePosition}/>)}
+
                         <Subtitle>Volunteer Experience</Subtitle>
                         <Field>
                             <Control>
@@ -189,7 +198,12 @@ class Form extends React.Component {
                                 </Button>
                             </Control>
                         </Field>
+
+                        {this.state.form.volunteer.map(e => <VolunteerQuestion job={e}
+                                                                               removePosition={this.removePosition}
+                                                                               updatePosition={this.updatePosition}/>)}
                     </form>
+                    <br/>
                 </Content>
             </Container>
         );

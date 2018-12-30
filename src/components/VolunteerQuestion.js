@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Button, Control, Field, Input, Label, TextArea} from "bloomer";
 
-export default class JobQuestion extends React.Component {
+export default class VolunteerQuestion extends React.Component {
 
     constructor(props) {
         super(props);
@@ -11,6 +11,10 @@ export default class JobQuestion extends React.Component {
 
     updatePosition(kind, uuid, event) {
         this.props.updatePosition(kind, uuid, event);
+    }
+
+    removePosition(kind, uuid, event) {
+        this.props.removePosition(kind, uuid, event);
     }
 
     render() {
@@ -64,11 +68,11 @@ export default class JobQuestion extends React.Component {
                 <Field>
                     <Label>Description</Label>
                     <Control>
-                                        <TextArea
-                                            placeholder="Describe your experience in this position,
-                                            what have you learnt, and the technologies used"
-                                            name="description" defaultValue={e.description}
-                                            onChange={event => this.updatePosition("V", e.uuid, event)}/>
+                        <TextArea
+                            placeholder="Describe your experience in this position,
+                            what have you learnt, and the technologies used"
+                            name="description" defaultValue={e.description}
+                            onChange={event => this.updatePosition("V", e.uuid, event)}/>
                     </Control>
                 </Field>
 

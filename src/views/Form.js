@@ -194,8 +194,6 @@ class Form extends React.Component {
             </Container>
         );
     }
-
-]
 }
 
 export default withRouter(Form);

@@ -95,11 +95,11 @@ class Result extends React.Component {
     }
 
     renderVolunteerExperience(form) {
-        if (!!form.academic && form.academic.length > 0) {
+        if (!!form.volunteer && form.volunteer.length > 0) {
             return (
                 <div>
                     <Subtitle>Volunteer Experience</Subtitle>
-                    {form.academic
+                    {form.volunteer
                         .sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime())
                         .map(e => (
                             <div key={e.uuid}>

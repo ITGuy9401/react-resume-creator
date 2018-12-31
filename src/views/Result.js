@@ -25,10 +25,84 @@ class Result extends React.Component {
                     {form.biography}
                 </div>
                 <br/>
-                <Subtitle>Work Experience</Subtitle>
-
+                {this.renderWorkExperience(form)}
+                {this.renderVolunteerExperience(form)}
+                {this.renderAcademicExperience(form)}
+                <Subtitle>Soft Skills & Hobbies</Subtitle>
+                <div>
+                    {form.soft_skills}
+                </div>
+                <div>
+                    {form.hobbies}
+                </div>
             </div>
         );
+    }
+
+    renderWorkExperience(form) {
+        if (!!form.jobs && form.jobs.length > 0) {
+            return (
+                <div>
+                    <Subtitle>Work Experience</Subtitle>
+                    {form.jobs
+                        .sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime())
+                        .map(e => (
+                            <div key={e.uuid}>
+                                <p>
+                                    <b>{e.position}, {e.company}</b>
+                                    - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
+                                </p>
+                                <p>{e.description}</p>
+                                <br/>
+                            </div>
+                        ))}
+                </div>
+            );
+        } else return <span/>;
+    }
+
+    renderAcademicExperience(form) {
+        if (!!form.academic && form.academic.length > 0) {
+            return (
+                <div>
+                    <Subtitle>Studies</Subtitle>
+                    {form.academic
+                        .sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime())
+                        .map(e => (
+                            <div key={e.uuid}>
+                                <p>
+                                    <b>{e.position}, {e.company}</b>
+                                    - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
+                                </p>
+                                <p>{e.description}</p>
+                                <br/>
+                            </div>
+                        ))}
+                </div>
+            );
+        } else return <span/>;
+    }
+
+    renderVolunteerExperience(form) {
+        if (!!form.academic && form.academic.length > 0) {
+            return (
+                <div>
+                    <Subtitle>Volunteer Experience</Subtitle>
+                    {form.academic
+                        .sort((a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime())
+                        .map(e => (
+                            <div key={e.uuid}>
+                                <p>
+                                    <b>{e.position}, {e.company}</b>
+                                    - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
+                                </p>
+                                <p>{e.description}</p>
+                                <br/>
+                            </div>
+                        ))}
+                </div>
+            );
+        } else return <span/>;
     }
 }
 

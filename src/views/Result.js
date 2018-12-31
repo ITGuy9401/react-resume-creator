@@ -22,7 +22,9 @@ class Result extends React.Component {
                 </Hero>
                 <Subtitle>Brief Summary</Subtitle>
                 <div>
-                    {form.biography}
+                    {form.biography.split('\n').map((item, i) => (
+                        <p key={i}>{item}<br/></p>
+                    ))}
                 </div>
                 <br/>
                 {this.renderWorkExperience(form)}
@@ -30,10 +32,15 @@ class Result extends React.Component {
                 {this.renderAcademicExperience(form)}
                 <Subtitle>Soft Skills & Hobbies</Subtitle>
                 <div>
-                    {form.soft_skills}
+                    {form.soft_skills.split('\n').map((item, i) => (
+                        <p key={i}>{item}<br/></p>
+                    ))}
                 </div>
+                <br/>
                 <div>
-                    {form.hobbies}
+                    {form.hobbies.split('\n').map((item, i) => (
+                        <p key={i}>{item}<br/></p>
+                    ))}
                 </div>
             </div>
         );
@@ -52,7 +59,9 @@ class Result extends React.Component {
                                     <b>{e.position}, {e.company}</b>
                                     - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
                                 </p>
-                                <p>{e.description}</p>
+                                <p>{e.description.split('\n').map((item, i) => (
+                                    <p key={i}>{item}<br/></p>
+                                ))}</p>
                                 <br/>
                             </div>
                         ))}
@@ -74,7 +83,9 @@ class Result extends React.Component {
                                     <b>{e.position}, {e.company}</b>
                                     - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
                                 </p>
-                                <p>{e.description}</p>
+                                <p>{e.description.split('\n').map((item, i) => (
+                                    <p key={i}>{item}<br/></p>
+                                ))}</p>
                                 <br/>
                             </div>
                         ))}
@@ -96,7 +107,9 @@ class Result extends React.Component {
                                     <b>{e.position}, {e.company}</b>
                                     - {e.start_date} - {!!e.current || !e.end_date ? "Current" : e.end_date}
                                 </p>
-                                <p>{e.description}</p>
+                                <p>{e.description.split('\n').map((item, i) => (
+                                    <p key={i}>{item}<br/></p>
+                                ))}</p>
                                 <br/>
                             </div>
                         ))}

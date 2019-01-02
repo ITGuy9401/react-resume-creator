@@ -49,7 +49,8 @@ class Form extends React.Component {
 
         const json = JSON.stringify(this.state.form);
         const blob = new Blob([json], {
-            type: 'application/json'
+            type: 'application/json',
+            encoding: "UTF-8"
         });
 
         this.setState({downloadUrl: URL.createObjectURL(blob)});
